@@ -1,0 +1,73 @@
+// For format details, see https://urldefense.com/v3/__https://aka.ms/devcontainer.json__;!!JVh_Qfuk4otXm3Mt0g!5jINV6wk2VkPCUYaLE3u7yD22uLRDiaYgLIP7B32yYgFmMtpqFwlq5cfVYZAJczN9sS_0Fl_hoe-M9F2Ey2mtG-eYilaB-E$  . For config options, see the README at:
+// https://urldefense.com/v3/__https://github.com/microsoft/vscode-dev-containers/tree/v0.224.3/containers/docker-existing-docker-compose__;!!JVh_Qfuk4otXm3Mt0g!5jINV6wk2VkPCUYaLE3u7yD22uLRDiaYgLIP7B32yYgFmMtpqFwlq5cfVYZAJczN9sS_0Fl_hoe-M9F2Ey2mtG-e7_YUuZE$  
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "local_dev",
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"docker-compose.yml"
+		// ,
+		// "docker-compose-zsh.yml"
+	],
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "app",
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspace",
+	// Set *default* container specific settings.json values on container create.
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"editor.bracketPairColorization.enabled": true,
+				"editor.guides.bracketPairs": "active",
+				"python.defaultInterpreterPath": "/usr/bin/python3",
+				"python.analysis.extraPaths": [
+					"/home/glue_user/aws-glue-libs/PyGlue.zip:/home/glue_user/spark/python/lib/py4j-0.10.9-src.zip:/home/glue_user/spark/python/",
+				],
+				"python.linting.flake8Enabled": true,
+				"python.linting.enabled": true,
+				"python.testing.pytestArgs": [
+					"--no-cov",
+					"--capture=no"
+				]
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"njpwerner.autodocstring",
+				"KevinRose.vsc-python-indent",
+				"frhtylcn.pythonsnippets",
+				"aaron-bond.better-comments",
+				"ms-python.black-formatter",
+				"mgesbert.python-path",
+				"ms-toolsai.jupyter",
+				"oderwat.indent-rainbow",
+				"ms-python.flake8"
+			]
+		}
+	},
+	"remoteEnv": {
+		"ENV": "test",
+		"AWS_REGION_NAME": "us-east-1",
+		"PYTHONPATH": "/workspace/:${containerEnv:PYTHONPATH}"
+	},
+	"containerEnv": {
+		"PYSPARK_PYTHON": "/usr/bin/python3",
+		"PYSPARK_PYTHON_DRIVER": "/usr/bin/python3"
+		// "PATH": "/usr/bin/:${containerEnv:PATH}"
+	},
+	// Add the IDs of extensions you want installed when the container is created.
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Uncomment the next line if you want start specific services in your Docker Compose config.
+	// "runServices": [],
+	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+	"shutdownAction": "stopCompose",
+	// Uncomment the next line to run commands after the container is created - for example installing curl.
+	"postCreateCommand": "/workspace/.devcontainer/scripts/run.sh"
+	// Uncomment to connect as a non-root user if you've added one. See https://urldefense.com/v3/__https://aka.ms/vscode-remote/containers/non-root__;!!JVh_Qfuk4otXm3Mt0g!5jINV6wk2VkPCUYaLE3u7yD22uLRDiaYgLIP7B32yYgFmMtpqFwlq5cfVYZAJczN9sS_0Fl_hoe-M9F2Ey2mtG-enhHwFLE$  .
+	// "remoteUser": "vscode"
+	// "features": {"github-cli": "latest"}
+}
