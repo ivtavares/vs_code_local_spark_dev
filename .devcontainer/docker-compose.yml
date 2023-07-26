@@ -2,6 +2,7 @@ version: '3.9'
 services:
   app:
     image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01
+    user: root
     container_name: test_dev
     volumes:
       - ..:/workspace
