@@ -6,6 +6,17 @@ services:
     container_name: test_dev
     volumes:
       - ..:/workspace
+      - ./spark-conf:/home/glue_user/spark/conf
     entrypoint: /bin/sh
     stdin_open: true
     tty: true
+  storage:
+    image: minio/minio
+    volumes:
+      - ../minio_storage:/data
+    ports:
+      - 9000:9000
+      - 9001:9001
+    env_file:
+      - minio_env
+    command: server --console-address ":9001" /data

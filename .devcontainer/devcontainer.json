@@ -7,8 +7,6 @@
 	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
 	"dockerComposeFile": [
 		"docker-compose.yml"
-		// ,
-		// "docker-compose-zsh.yml"
 	],
 	// The 'service' property is the name of the service for the container that VS Code should
 	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
@@ -22,12 +20,10 @@
 			"settings": {
 				"editor.bracketPairColorization.enabled": true,
 				"editor.guides.bracketPairs": "active",
-				"python.defaultInterpreterPath": "/usr/bin/python3",
+				"python.defaultInterpreterPath": "/usr/local/bin/python3",
 				"python.analysis.extraPaths": [
 					"/home/glue_user/aws-glue-libs/PyGlue.zip:/home/glue_user/spark/python/lib/py4j-0.10.9-src.zip:/home/glue_user/spark/python/",
 				],
-				"python.linting.flake8Enabled": true,
-				"python.linting.enabled": true,
 				"python.testing.pytestArgs": [
 					"--no-cov",
 					"--capture=no"
@@ -51,12 +47,12 @@
 	"remoteEnv": {
 		"ENV": "test",
 		"AWS_REGION_NAME": "us-east-1",
-		"PYTHONPATH": "/workspace/:${containerEnv:PYTHONPATH}"
+		"PYTHONPATH": "/workspace/:${containerEnv:PYTHONPATH}",
+		"PATH": "/usr/bin/local/:${containerEnv:PATH}",
 	},
 	"containerEnv": {
-		"PYSPARK_PYTHON": "/usr/bin/python3",
-		"PYSPARK_PYTHON_DRIVER": "/usr/bin/python3"
-		// "PATH": "/usr/bin/:${containerEnv:PATH}"
+		"PYSPARK_PYTHON": "/usr/local/bin/python3",
+		"PYSPARK_DRIVER_PYTHON": "/usr/local/bin/python3"
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
