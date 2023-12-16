@@ -14,7 +14,8 @@ This repository provides a template for writing PySpark unit tests using `pytest
 2. Open the repository in Visual Studio Code.
 3. Press <kbd>F1</kbd> and select **Remote-Containers: Reopen in Container**.
 4. Wait for the dev container to be built.
-5. Run `pytest` to run the tests.
+5. in the terminal, run `pipenv shell` to activate the virtual environment.
+6. Run `pytest` to run the tests.
 
 ## How it Works
 
