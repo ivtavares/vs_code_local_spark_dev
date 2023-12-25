@@ -1,0 +1,16 @@
+Entidades: 
+	-> competitions (competição);
+	-> matches (jogos);
+		-> country (país);
+		-> stadium;
+		-> referee (árbitro);
+		-> team (time);
+		-> manager (técnico);
+		-> match_status (status da partida);
+		-> competition_stage (estágios dá competição); 
+	-> season (temporadas);
+	-> events (eventos);
+	-> lineups (escalação);
+		-> player;
+	-> three-sixty (dados do StatsBomb 360;
+
