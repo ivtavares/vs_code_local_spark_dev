@@ -1,0 +1,4 @@
+-> competitions: season_id;
+-> matches: season_name, competition_id;
+-> lineups: season_name, competition_id, team_id;
+-> events: match_id;
