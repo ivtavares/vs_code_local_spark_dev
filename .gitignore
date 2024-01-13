@@ -168,3 +168,6 @@ airflow/airflow-webserver.pid
 airflow/standalone_admin_password.txt
 airflow/webserver_config.py
 airflow/Pipfile*
+
+# Minio
+minio_storage/

@@ -1,4 +1,4 @@
 #!/bin/bash
-if ! test -f /usr/bin/pip; then ln -s /usr/bin/pip3 /usr/bin/pip; fi
-cp /workspace/.devcontainer/scripts/.bashrc ~/.bashrc
-/usr/bin/pip3 install -r /workspace/requirements.txt
+if ! test -f /usr/local/bin/pip; then ln -s /usr/local/bin/pip3 /usr/local/bin/pip; fi
+pip install pipenv
+pipenv install --dev
