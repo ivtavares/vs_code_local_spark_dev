@@ -171,3 +171,6 @@ airflow/Pipfile*
 
 # Minio
 minio_storage/
+
+# Bucket
+bucket/bronze
