@@ -1,6 +1,7 @@
 from app_name.configs.spark_helper import create_delta_lake_session
 from pyspark.sql import functions as F
 
+
 # variable path
 bronze_audit_path = "s3://bronze/auditoria_municipal/6-siap-net-orgaos-municipais-autoridades-2016.csv"
 silver_audit_path = "s3://silver/auditoria_municipal/"
@@ -13,9 +14,9 @@ def audit_bronze_to_silver(bronze_path: str, silver_path: str):
     
     # Create df
     auditoria_df = (spark.read.option("delimiter", ";") 
-                          .option("header", True)
-                          .option('encoding', 'ISO-8859-1') 
-                          .csv(bronze_path))
+                              .option("header", True)
+                              .option('encoding', 'ISO-8859-1') 
+                              .csv(bronze_path))     
     
     # Change Schema
     auditoria_df_01 = auditoria_df.select(F.col('CodigoMunicipio').cast('int')  
