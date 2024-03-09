@@ -9,6 +9,7 @@ silver_audit_path = "s3://silver/auditoria_municipal/"
 # bronze to silver function
 def audit_bronze_to_silver(bronze_path: str, silver_path: str):
     spark = create_delta_lake_session('auditoria')
+    spark.conf.set('spark.sql.sources.partitionOverwriteMode', 'dynamic')
     
     # Create df
     auditoria_df = (spark.read.option("delimiter", ";") 
