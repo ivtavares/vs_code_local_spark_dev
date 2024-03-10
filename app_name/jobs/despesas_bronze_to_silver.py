@@ -1,6 +1,7 @@
 from app_name.configs.spark_helper import create_delta_lake_session
 from pyspark.sql import functions as F
 
+
 # variable path
 bronze_despesas_path = "s3://bronze/despesas/despesas-2023.csv"
 silver_despesas_path = "s3://silver/despesas/"
@@ -9,6 +10,7 @@ silver_despesas_path = "s3://silver/despesas/"
 # bronze to silver function
 def despesas_bronze_to_silver(bronze_path: str, silver_path: str):
     spark = create_delta_lake_session('auditoria')
+    spark.conf.set('spark.sql.sources.partitionOverwriteMode', 'dynamic')
     
     # Create df
     despesas_df = (spark.read.option("delimiter", ";") 
