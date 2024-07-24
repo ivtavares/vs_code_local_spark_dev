@@ -171,3 +171,7 @@ airflow/Pipfile*
 
 # Minio
 minio_storage/
+
+#devontainer
+.devcontainer/container_certs
+.devcontainer/logs
