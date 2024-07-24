@@ -1,15 +1,77 @@
-version: '3.9'
 services:
-  app:
+  app-master:
+    container_name: app-master
     image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01
     user: root
-    container_name: test_dev
+    ports:
+      - 8080:8080
     volumes:
       - ..:/workspace
-      - ./spark-conf:/home/glue_user/spark/conf
-    entrypoint: /bin/sh
+      - ./scripts:/home/scripts
+      - ./conf:/home/glue_user/spark/conf
+      - ./logs:/tmp/spark-events
+    environment: 
+      - &spark_master_host
+        SPARK_MASTER_HOST=app-master
+      - &spark_master_port
+        SPARK_MASTER_PORT=7077
+    command: /home/scripts/start_master.sh
     stdin_open: true
     tty: true
+  
+  app-worker-1: &app-worker
+    image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01
+    container_name: app-worker-1
+    volumes:
+      - ./scripts:/home/scripts
+      - ./conf:/home/glue_user/spark/conf
+      - ./container_certs:/home/glue_user/.certs/container_certs
+      - ./logs:/tmp/spark-events
+    command: /home/scripts/start_worker.sh
+    environment:
+      - *spark_master_host
+      - *spark_master_port
+      - SPARK_WORKER_MEMORY=3G
+      - SPARK_WORKER_CORES=2
+    healthcheck:
+      test: ["CMD", "curl", "localhost:8081"]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 2s
+    depends_on:
+      - app-master
+  
+  app-worker-2:
+    <<: *app-worker
+    container_name: app-worker-2
+    depends_on:
+      app-master:
+        condition: service_started
+      app-worker-1:
+        condition: service_healthy
+        restart: true
+  
+  history-server:
+    image: amazon/aws-glue-libs:glue_libs_4.0.0_image_01
+    container_name: history-server
+    volumes:
+      - ./scripts:/home/scripts
+      - ./conf:/home/glue_user/spark/conf
+      - ./container_certs:/home/glue_user/.certs/container_certs
+      - ./logs:/tmp/spark-events
+    command: /home/scripts/start_history_server.sh
+    ports:
+      - 18080:18080
+      - 4040:4040
+    depends_on:
+      app-master:
+        condition: service_started
+      app-worker-1:
+        condition: service_healthy
+      app-worker-2:
+        condition: service_healthy
+  
   storage:
     image: minio/minio
     volumes:

@@ -1,0 +1,1 @@
+/home/glue_user/spark/sbin/start-master.sh & /bin/sh
